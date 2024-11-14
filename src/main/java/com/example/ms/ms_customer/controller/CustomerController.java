@@ -40,12 +40,9 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/{id}")
-    public  ResponseEntity<CustomerDto> getCustomer(@RequestParam String dni) {
+    public  ResponseEntity<CustomerDto> getCustomer(@RequestHeader Map<String, String> headers, @PathVariable String dni) {
         CustomerDto customerDto = customerService.getCustomer(dni);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
-
-
-
     }
 
     @PutMapping("/customers/{id}")
@@ -63,9 +60,20 @@ public class CustomerController {
 
     }
 
-    @DeleteMapping("/customers/{id}")
-    public boolean deleteCustomer(@RequestHeader Map<String, String> headers, @PathVariable String id) {
-        return customerService.deleteCustomer(id);
+
+    //@DeleteMapping("/customers/{id}")
+    @RequestMapping(value = "/customers",method=RequestMethod.DELETE)
+    public ResponseEntity<ResponseDto> deleteCustomer(@RequestHeader Map<String, String> headers, @RequestParam String dni) {
+        boolean isDeleted = customerService.deleteCustomer(dni);
+        if(isDeleted) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                        .body(new ResponseDto(CustomersConstants.STATUS_200, CustomersConstants.MESSAGE_200));
+        }else{
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDto(CustomersConstants.STATUS_500, CustomersConstants.MESSAGE_417_DELETE));
+        }
     }
 
 }

@@ -12,16 +12,16 @@ public class Customer extends BaseEntity{
     @Column(name = "customer_id")
     private Long customerId;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(name="name",columnDefinition = "text", nullable = false)
     private String name;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(name="lastname",columnDefinition = "text", nullable = false)
     private String lastname;
 
     @Column(name="dni",columnDefinition = "text", nullable = false)
     private String dni;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(name="email",columnDefinition = "text", nullable = false)
     private String email;
 
     @PrePersist

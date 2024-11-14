@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -43,25 +42,46 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getCustomer(String dni) {
-
         Customer customer = customerRepository.findByDni(dni).orElseThrow(
-                () -> new ResourceNotFoundException("Customer", "dni", dni)
+               () -> new ResourceNotFoundException("Customer", "dni", dni)
         );
-        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+//        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+//
+//        return customerDto;
 
-        return customerDto;
-
-
+        return CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
     }
 
     @Override
     public boolean updateCustomer(CustomerDto customerDto) {
-        boolean isUpdated = false;
-        return  isUpdated;
+
+        Optional<Customer> optionalCustomer = customerRepository.findByDni(customerDto.getDni());
+
+        if (!optionalCustomer.isPresent()) {
+            throw new CustomerAlreadyExistsException("Customer not found with DNI: " + customerDto.getDni());
+        }
+
+        Customer customer = optionalCustomer.get();
+        customer.setName(customerDto.getName());
+        customer.setLastname(customerDto.getLastname());
+        customer.setEmail(customerDto.getEmail());
+
+        customer.setUpdatedAt(LocalDateTime.now());
+        customer.setUpdatedBy("Anonymous");
+
+        customerRepository.save(customer);
+
+        return true;
     }
 
     @Override
-    public boolean deleteCustomer(String id) {
-        return false;
+    public boolean deleteCustomer(String dni) {
+
+        Customer customer = customerRepository.findByDni(dni).orElseThrow(
+                () -> new ResourceNotFoundException("Customer", "dni", dni)
+        );
+        customerRepository.deleteById(customer.getCustomerId());
+
+        return true;
     }
 }

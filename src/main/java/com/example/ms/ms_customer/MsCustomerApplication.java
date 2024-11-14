@@ -10,4 +10,7 @@ public class MsCustomerApplication {
 		SpringApplication.run(MsCustomerApplication.class, args);
 	}
 
+
+
+
 }
