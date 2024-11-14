@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: Gestión de Clientes API
+  version: 1.0.0
+  description: API para gestionar clientes
+
+paths:
+  /clientes:
+    get:
+      summary: Listar todos los clientes
+      description: Recupera una lista de todos los clientes
+      responses:
+        '200':
+          description: Lista de recursos
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cliente'
+
+
+      post:
+        summary: Crear un nuevo cliente
+        description: Crear un cliente nuevo con validaciones de campos obligatorios y DNI único
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        responses:
+          '201':
+            description: Cliente creado exitosamente
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Cliente'
+          '400':
+            description: Error de validación (DNI duplicado o formato de correo inválido)
+          '500':
+            description: Error en el servidor
+
+  /clientes/{id}:
+    get:
+      summary: Obtener un cliente por ID
+      description: Recupera un cliente específico por su ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del cliente
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '404':
+          description: Cliente no encontrado
+
+    put:
+      summary: Actualizar cliente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '200':
+          description: Cliente actualizado
+  '400':
+    description: Error de validación (DNI duplicado o formato de correo inválido)
+    '404':
+      description: Cliente no encontrado
+
+    delete:
+      summary: Eliminar cliente
+      description: Elimina un cliente por su ID, si no tiene cuentas activas.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cliente eliminado
+    '400':
+      description: No se permite eliminar el cliente porque tiene cuentas activas
+      '404':
+        description:Cliente no encontrado
+
+
+components:
+  schemas:
+    Cliente:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador único del cliente
+        nombre:
+          type: string
+          description: Nombre del cliente
+        apellido:
+          type: string
+          description: Apellido del cliente
+        dni:
+          type: string
+          description: DNI único del cliente
+        email:
+          type: string
+          description: Correo electrónico del cliente, con validación de formato
+      required:
+        - nombre
+        - apellido
+        - dni
+        - email
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
