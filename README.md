@@ -2,16 +2,18 @@ Bootcamp NTT DATA Girl Power - JAVA
 
 Microservicio de Clientes
 
-Clonar el repositorio o descargar zip
+1. Clonar el repositorio o descargar zip
 
-Abrir proyecto en intelliJ
+2. Abrir proyecto en intelliJ
 
-Conexión de Base de datos con MySQL en
+3. Conexión de Base de datos con MySQL en
 
-server port: 3305
+   server port: 3305
 
-Correr el main con Shift+F10
+4. Correr el main con Shift+F10
 
-Aplicación corre en consola
+5. Aplicación corre en consola
 
-Se puede verificar la base de dato por consola de H2 en el navegador ingresando el jdbc que aparece en la consola al correr el main EJM: url=jdbc:h2:mem:140c144f-ef02-4ea9-895e-eb09b3b6976b user=SA
+6. Se puede verificar la base de dato por consola de H2 en el navegador ingresando el jdbc que aparece en la consola al correr el main
+    EJM:   url=jdbc:h2:mem:140c144f-ef02-4ea9-895e-eb09b3b6976b user=SA
+
