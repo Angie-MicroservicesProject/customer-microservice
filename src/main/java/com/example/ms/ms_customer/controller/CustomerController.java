@@ -1,13 +1,12 @@
 package com.example.ms.ms_customer.controller;
 
-
 import com.example.ms.ms_customer.constants.CustomersConstants;
 import com.example.ms.ms_customer.dto.CustomerDto;
 import com.example.ms.ms_customer.dto.ResponseDto;
 import com.example.ms.ms_customer.model.entity.Customer;
 import com.example.ms.ms_customer.service.CustomerService;
 
-import jakarta.validation.constraints.Pattern;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,29 +38,30 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping("/customers/{id}")
-    public  ResponseEntity<CustomerDto> getCustomer(@RequestHeader Map<String, String> headers, @PathVariable String dni) {
+
+    @GetMapping("/customers/{dni}")
+    public ResponseEntity<CustomerDto> getCustomer(@PathVariable String dni) {
         CustomerDto customerDto = customerService.getCustomer(dni);
-        return ResponseEntity.status(HttpStatus.OK).body(customerDto);
+        return ResponseEntity.ok(customerDto);
     }
 
     @PutMapping("/customers/{id}")
     public ResponseEntity<ResponseDto> updateCustomer(@PathVariable String id, @RequestBody CustomerDto customerDto) {
         boolean isUpdated = customerService.updateCustomer(customerDto);
-        if(isUpdated) {
+        if (isUpdated) {
+            ResponseDto responseDto = new ResponseDto("200", "Client updated successfully");
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(new ResponseDto(CustomersConstants.STATUS_200, CustomersConstants.MESSAGE_200));
-        }else{
+                    .body(responseDto);
+        } else {
+            ResponseDto responseDto = new ResponseDto("417", "Failed to update client");
             return ResponseEntity
                     .status(HttpStatus.EXPECTATION_FAILED)
-                    .body(new ResponseDto(CustomersConstants.STATUS_417, CustomersConstants.MESSAGE_417_UPDATE));
+                    .body(responseDto);
         }
-
     }
 
 
-    //@DeleteMapping("/customers/{id}")
     @RequestMapping(value = "/customers",method=RequestMethod.DELETE)
     public ResponseEntity<ResponseDto> deleteCustomer(@RequestHeader Map<String, String> headers, @RequestParam String dni) {
         boolean isDeleted = customerService.deleteCustomer(dni);

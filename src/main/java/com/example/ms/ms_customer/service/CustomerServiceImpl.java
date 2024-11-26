@@ -24,14 +24,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createCustomer(CustomerDto customerDto) {
-     Customer customer= CustomerMapper.mapToCustomer(customerDto, new Customer());
-     Optional<Customer> optionalCustomer=customerRepository.findByDni(customerDto.getDni());
-     if(optionalCustomer.isPresent()){
-         throw new CustomerAlreadyExistsException("Customer already registered with given DNI"+customerDto.getDni());
-     }
-     customer.setCreatedAt(LocalDateTime.now());
-     customer.setCreatedBy("Anonymus");
-     Customer savedCustomer = customerRepository.save(customer);
+
+            Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
+            if (customer == null) {
+                throw new IllegalArgumentException("Customer mapping failed.");
+            }
+            // Llama a findByDni
+            Optional<Customer> optionalCustomer = customerRepository.findByDni(customerDto.getDni());
+            if (optionalCustomer.isPresent()) {
+                throw new CustomerAlreadyExistsException(
+                        String.format("Customer already registered with DNI: %s", customerDto.getDni())
+                );
+            }
+            customer.setCreatedAt(LocalDateTime.now());
+            customer.setCreatedBy("Anonymous");
+            customerRepository.save(customer);
 
     }
 
@@ -42,15 +49,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getCustomer(String dni) {
-        Customer customer = customerRepository.findByDni(dni).orElseThrow(
-               () -> new ResourceNotFoundException("Customer", "dni", dni)
-        );
-//        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
-//
-//        return customerDto;
+        if (dni == null || dni.trim().isEmpty()) {
+            throw new IllegalArgumentException("DNI cannot be null or empty");
+        }
 
+        Customer customer = customerRepository.findByDni(dni)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "dni", dni));
+
+        // Mapeo de Customer a CustomerDto
         return CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
     }
+
 
     @Override
     public boolean updateCustomer(CustomerDto customerDto) {
