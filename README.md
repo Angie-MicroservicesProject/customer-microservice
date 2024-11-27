@@ -17,3 +17,7 @@ Microservicio de Clientes
 6. Se puede verificar la base de dato por consola de H2 en el navegador ingresando el jdbc que aparece en la consola al correr el main
     EJM:   url=jdbc:h2:mem:140c144f-ef02-4ea9-895e-eb09b3b6976b user=SA
 
+7. Para visualizar las pruebas unitarias en la carpeta src>test 
+
+8. Para ver el informe de jacoco ejecutar el comando `mvn clean test` y en la carpeta
+    target>site>jacoco-resources>index.html dar click derecho y "Open in" seleccionamos "Explorer" 

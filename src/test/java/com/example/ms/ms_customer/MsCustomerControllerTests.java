@@ -1,52 +1,26 @@
 package com.example.ms.ms_customer;
 
-//import com.example.ms.ms_customer.constants.CustomersConstants;
-//import com.example.ms.ms_customer.controller.CustomerController;
-//import com.example.ms.ms_customer.dto.CustomerDto;
-//import com.example.ms.ms_customer.dto.ResponseDto;
-//import com.example.ms.ms_customer.exception.CustomerAlreadyExistsException;
-//import com.example.ms.ms_customer.exception.ResourceNotFoundException;
-//import com.example.ms.ms_customer.model.entity.Customer;
-//import com.example.ms.ms_customer.repository.CustomerRepository;
-//import com.example.ms.ms_customer.service.CustomerServiceImpl;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.MockitoAnnotations;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.Mockito.*;
 
 import com.example.ms.ms_customer.constants.CustomersConstants;
 import com.example.ms.ms_customer.controller.CustomerController;
 import com.example.ms.ms_customer.dto.CustomerDto;
 import com.example.ms.ms_customer.dto.ResponseDto;
-import com.example.ms.ms_customer.exception.CustomerAlreadyExistsException;
 import com.example.ms.ms_customer.model.entity.Customer;
-import com.example.ms.ms_customer.repository.CustomerRepository;
 import com.example.ms.ms_customer.service.CustomerService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import static org.hamcrest.Matchers.hasKey;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

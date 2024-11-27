@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-
     private final CustomerRepository customerRepository;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
@@ -29,7 +28,6 @@ public class CustomerServiceImpl implements CustomerService {
             if (customer == null) {
                 throw new IllegalArgumentException("Customer mapping failed.");
             }
-            // Llama a findByDni
             Optional<Customer> optionalCustomer = customerRepository.findByDni(customerDto.getDni());
             if (optionalCustomer.isPresent()) {
                 throw new CustomerAlreadyExistsException(
@@ -52,11 +50,8 @@ public class CustomerServiceImpl implements CustomerService {
         if (dni == null || dni.trim().isEmpty()) {
             throw new IllegalArgumentException("DNI cannot be null or empty");
         }
-
         Customer customer = customerRepository.findByDni(dni)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "dni", dni));
-
-        // Mapeo de Customer a CustomerDto
         return CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
     }
 

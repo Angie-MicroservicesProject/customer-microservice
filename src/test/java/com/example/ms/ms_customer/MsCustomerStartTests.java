@@ -7,17 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 class MsCustomerStartTests {
 
-
 	@Test
 	void contextLoads() {
-
 	}
 
 	@Test
 	void mainMethodRuns() {
-
 		MsCustomerApplication.main(new String[] {});
-
 	}
 
 

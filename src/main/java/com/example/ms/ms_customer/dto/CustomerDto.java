@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CustomerDto {
 
     @NotEmpty(message = "Name can not be a null or empty")
