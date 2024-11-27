@@ -61,7 +61,6 @@ public class CustomerController {
         }
     }
 
-
     @RequestMapping(value = "/customers",method=RequestMethod.DELETE)
     public ResponseEntity<ResponseDto> deleteCustomer(@RequestHeader Map<String, String> headers, @RequestParam String dni) {
         boolean isDeleted = customerService.deleteCustomer(dni);
