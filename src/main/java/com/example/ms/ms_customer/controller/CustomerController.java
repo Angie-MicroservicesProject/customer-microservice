@@ -39,11 +39,12 @@ public class CustomerController {
     }
 
 
-    @GetMapping("/customers/{dni}")
-    public ResponseEntity<CustomerDto> getCustomer(@PathVariable String dni) {
-        CustomerDto customerDto = customerService.getCustomer(dni);
-        return ResponseEntity.ok(customerDto);
+    @GetMapping("/customers/{id}")
+    public ResponseEntity<CustomerDto> getCustomer(@RequestHeader Map<String, String> headers, @PathVariable String id) {
+        CustomerDto customerDto = customerService.getCustomer(id);
+        return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
+
 
     @PutMapping("/customers/{id}")
     public ResponseEntity<ResponseDto> updateCustomer(@PathVariable String id, @RequestBody CustomerDto customerDto) {

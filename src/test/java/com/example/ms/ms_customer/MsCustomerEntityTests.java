@@ -67,6 +67,8 @@ class MsCustomerEntity {
 		assertThat(fullCustomer.getEmail()).isEqualTo("jane.smith@example.com");
 	}
 
+
+
 }
 
 

@@ -52,7 +52,9 @@ public class CustomerServiceImpl implements CustomerService {
         }
         Customer customer = customerRepository.findByDni(dni)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "dni", dni));
-        return CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+
+        CustomerDto customerDto= CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        return customerDto;
     }
 
 
